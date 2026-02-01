@@ -9,3 +9,8 @@ Una vez abierto puedes dar comandos de este tipo y hará todo en orden:
 - Envía mensaje a Telegram a 34620158203
 - Publica en LinkedIn sobre mi perfil
 - Busca en Google artículos recientes sobre IA
+------
+***RECOMENDACIÓN SI USAS MAC MINI (u ordenador fijo PARA CONTROLAR A DISTANCIA CON MÓVIL):
+Usar Chrome remote desktop o Anydesk.
+
+Recomendable usar MarIA Avanzado (gestiona labores avanzadas con Llama) + Gemini CLi (gestiona archivos del ordenador, deja organizar por carpetas y cambiar nombres de archivos, así como agrupar archivos según su tipología).
