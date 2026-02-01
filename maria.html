@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>MarIA – Asistente Inteligente Avanzado</title>
+<style>
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 950px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 25px;
+}
+h1 { margin-top: 0; }
+textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 15px;
+  resize: vertical;
+}
+button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+.primary { background: black; color: white; }
+.quick-btn { background: #eee; margin: 4px; }
+.section { margin-top: 20px; }
+.tutorial {
+  background: #f7f7f7;
+  border-left: 5px solid black;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.contacts button {
+  background: #eee;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+}
+.result-block {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🤖 MarIA Avanzado</h1>
+<p>Asistente inteligente para emails, WhatsApp, Telegram, X, Facebook, LinkedIn, Instagram, búsquedas y textos profesionales</p>
+
+<div class="tutorial">
+<b>Ejemplos de uso:</b>
+<ul>
+  <li>- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial</li>
+  <li>- Escribe WhatsApp a 620158203 indicando ley conmutativa</li>
+  <li>- Publica tuit ACADEMICO sobre mi nuevo libro</li>
+  <li>- Busca artículos recientes sobre IA en Google</li>
+</ul>
+</div>
+
+<div class="section">
+<b>Acciones rápidas:</b><br>
+<button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
+<button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
+<button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
+<button class="quick-btn" onclick="quick('twitter')">🐦 Tuit</button>
+<button class="quick-btn" onclick="quick('facebook')">📘 Facebook</button>
+<button class="quick-btn" onclick="quick('linkedin')">🔗 LinkedIn</button>
+<button class="quick-btn" onclick="quick('instagram')">📸 Instagram</button>
+<button class="quick-btn" onclick="quick('texto')">✍️ Texto</button>
+<button class="quick-btn" onclick="quick('buscar')">🔎 Google</button>
+<button class="quick-btn" onclick="fillTemplate()">📝 Plantilla</button>
+</div>
+
+<div class="section">
+<textarea id="prompt" rows="6" placeholder="Escribe aquí tus tareas, una por línea..."></textarea>
+<br><br>
+<button class="primary" onclick="generate()">Ejecutar</button>
+</div>
+
+<div class="section">
+<h3>Resultados</h3>
+<div id="results"></div>
+</div>
+
+<div class="section">
+<h3>Contactos recientes</h3>
+<div id="contacts"></div>
+</div>
+
+<script>
+function quick(type){
+  const presets = {
+    email: "Manda email a @gmail.com con asunto IMPORTANTE solicitando -",
+    whatsapp: "Escribe WhatsApp a 620158203",
+    telegram: "Envía mensaje a Telegram a 34620158203",
+    twitter: "Publica tuit ACADEMICO sobre mi nuevo libro",
+    facebook: "Publica en Facebook sobre mi nuevo libro",
+    linkedin: "Publica en LinkedIn sobre mi perfil profesional",
+    instagram: "Prepara texto para Instagram sobre foto del libro",
+    texto: "Explícame un concepto de forma sencilla",
+    buscar: "Busca en Google artículos sobre inteligencia artificial"
+  };
+  document.getElementById("prompt").value = presets[type];
+}
+
+function fillTemplate(){
+  document.getElementById("prompt").value =
+`- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial
+- Escribe WhatsApp a 620158203 indicando puntos clave
+- Envía mensaje a Telegram a 34620158203
+- Publica en LinkedIn sobre mi perfil
+- Busca en Google artículos recientes sobre IA`;
+}
+
+async function generate(){
+  const lines = document.getElementById("prompt").value
+    .split("\n").filter(l => l.trim() !== "");
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  const systemInstruction = `
+Responde SOLO en JSON válido.
+
+FORMATO GENERAL:
+{
+ "accion": "whatsapp | twitter | email | texto | buscar | telegram | facebook | linkedin | instagram",
+ "destinatario": "",
+ "asunto": "",
+ "contenido": ""
+}
+
+FORMATO MEJORADO SOLO PARA BUSCAR:
+{
+ "accion": "buscar",
+ "consultas": ["consulta 1", "consulta 2"]
+}
+
+REGLAS:
+- Emails profesionales con asunto
+- Búsquedas: genera varias consultas útiles
+- No escribas texto fuera del JSON
+`;
+
+  for(const line of lines){
+    try{
+      const r = await fetch("http://localhost:11434/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "llama3",
+          prompt: systemInstruction + "\nUsuario: " + line,
+          stream: false
+        })
+      });
+
+      const data = await r.json();
+      const res = JSON.parse(data.response);
+
+      /* 🔎 GOOGLE MEJORADO + COMPATIBLE */
+      if(res.accion === "buscar"){
+        let queries = [];
+
+        if(Array.isArray(res.consultas)){
+          queries = res.consultas;
+        } else if(res.contenido){
+          queries = res.contenido.split("\n").filter(Boolean);
+        }
+
+        queries.forEach(q=>{
+          window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank");
+        });
+
+        const block = document.createElement("div");
+        block.className = "result-block";
+        block.innerHTML = "<b>Búsquedas:</b><br>" + queries.map(q=>"🔎 "+q).join("<br>");
+        resultsDiv.appendChild(block);
+        continue;
+      }
+
+      if(res.accion === "whatsapp"){
+        window.open(`https://wa.me/${res.destinatario}?text=${encodeURIComponent(res.contenido)}`);
+      }
+      if(res.accion === "telegram"){
+      const phone = res.destinatario.replace(/\s+/g, "");
+      window.open(
+     `https://t.me/+${phone}?text=${encodeURIComponent(res.contenido)}`,
+     "_blank"
+       );
+     }
+
+
+
+      if(res.accion === "twitter"){
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(res.contenido)}`);
+      }
+      if(res.accion === "email"){
+        window.open(
+          "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+          encodeURIComponent(res.destinatario) +
+          "&su=" + encodeURIComponent(res.asunto) +
+          "&body=" + encodeURIComponent(res.contenido)
+        );
+      }
+
+      const block = document.createElement("div");
+      block.className = "result-block";
+      block.innerHTML = `<textarea rows="5">${res.contenido}</textarea>`;
+      resultsDiv.appendChild(block);
+
+    } catch(e){
+      console.error(e);
+    }
+  }
+}
+</script>
+
+</body>
+</html>
