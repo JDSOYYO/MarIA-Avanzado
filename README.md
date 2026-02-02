@@ -14,3 +14,8 @@ Una vez abierto puedes dar comandos de este tipo y hará todo en orden:
 Usar Chrome remote desktop o Anydesk.
 
 Recomendable usar MarIA Avanzado (gestiona labores avanzadas con Llama) + Gemini CLi (gestiona archivos del ordenador, deja organizar por carpetas y cambiar nombres de archivos, así como agrupar archivos según su tipología).
+----
+Chrome extension: ollama assistant:
+Se conecta con Ollama tras ejecutar en terminal
+OLLAMA_ORIGINS="*" ollama serve
+Permite seleccionar cualquier mensaje y lo responde al clicar en la extensión.
