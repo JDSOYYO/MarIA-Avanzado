@@ -12,136 +12,281 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 30px auto;
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   padding: 25px;
 }
-h1 { margin-top: 0; }
+h1 { 
+  margin-top: 0; 
+  color: #333;
+}
+h2 {
+  color: #444;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+}
 textarea {
   width: 100%;
   border-radius: 8px;
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 12px;
   font-size: 15px;
   resize: vertical;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 button {
-  padding: 10px 14px;
+  padding: 10px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s;
+  margin: 4px;
+  font-weight: 500;
 }
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-.primary { background: black; color: white; }
-.quick-btn { background: #eee; margin: 4px; }
-.save-btn { background: #4CAF50; color: white; }
-.history-btn { background: #2196F3; color: white; }
+.primary { 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; 
+}
+.save-btn { 
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white; 
+}
+.history-btn { 
+  background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%);
+  color: white; 
+}
+.export-btn { 
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white; 
+}
+.import-btn { 
+  background: linear-gradient(135deg, #9C27B0 0%, #6A1B9A 100%);
+  color: white; 
+}
+.quick-btn { 
+  background: #e3f2fd; 
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+}
+.quick-btn:hover {
+  background: #bbdefb;
+}
+.email-btn {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+.business-btn {
+  background: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffe0b2;
+}
+.social-btn {
+  background: #f3e5f5;
+  color: #7b1fa2;
+  border: 1px solid #e1bee7;
+}
+.writing-btn {
+  background: #e8eaf6;
+  color: #303f9f;
+  border: 1px solid #c5cae9;
+}
 .section { 
-  margin-top: 20px; 
-  padding-bottom: 20px;
+  margin-top: 25px; 
+  padding-bottom: 25px;
   border-bottom: 1px solid #eee;
 }
 .tutorial {
-  background: #f7f7f7;
-  border-left: 5px solid black;
-  padding: 15px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-left: 5px solid #667eea;
+  padding: 18px;
   border-radius: 8px;
   font-size: 14px;
-}
-.contacts button {
-  background: #eee;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 5px;
+  line-height: 1.6;
 }
 .result-block {
   margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 15px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  background: #fafafa;
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.result-block.email-result {
+  border-left: 4px solid #4CAF50;
+}
+.result-block.writing-result {
+  border-left: 4px solid #2196F3;
+}
+.result-block.social-result {
+  border-left: 4px solid #9C27B0;
 }
 .history-item {
   background: #f9f9f9;
   border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 10px;
-  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 .history-item:hover {
   background: #e8f4ff;
+  border-color: #2196F3;
+  transform: translateX(5px);
 }
 .history-item .timestamp {
   font-size: 12px;
   color: #666;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .saved-prompt {
   background: #e8f5e9;
   border: 1px solid #4CAF50;
-  border-radius: 6px;
-  padding: 10px;
-  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 .saved-prompt:hover {
   background: #c8e6c9;
+  transform: translateX(5px);
+}
+.saved-prompt .timestamp {
+  font-size: 12px;
+  color: #2e7d32;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .saved-prompt .actions {
-  margin-top: 8px;
+  margin-top: 10px;
   text-align: right;
 }
 .saved-prompt .actions button {
-  padding: 4px 8px;
+  padding: 6px 12px;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 8px;
+  border-radius: 6px;
 }
 .tab-container {
   display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
 }
 .tab {
-  padding: 10px 20px;
+  padding: 14px 24px;
   cursor: pointer;
   border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+.tab:hover {
+  background: #e9ecef;
 }
 .tab.active {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid #667eea;
+  background: white;
   font-weight: bold;
+  color: #667eea;
 }
 .tab-content {
   display: none;
+  animation: fadeIn 0.3s ease;
 }
 .tab-content.active {
   display: block;
 }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 .prompt-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 15px;
+  flex-wrap: wrap;
 }
-.grid-container {
+.quick-actions-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+.import-export {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
   margin-top: 20px;
 }
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-  }
+.import-export .buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+.status-message {
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  display: none;
+}
+.status-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.status-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.action-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+.email-tag { background: #4CAF50; color: white; }
+.whatsapp-tag { background: #25D366; color: white; }
+.social-tag { background: #667eea; color: white; }
+.search-tag { background: #FF9800; color: white; }
+.telegram-tag { background: #0088cc; color: white; }
+.writing-tag { background: #2196F3; color: white; }
+.email-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.email-actions button {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.recipients-list {
+  margin: 8px 0;
+  padding: 10px;
+  background: #f1f8e9;
+  border-radius: 6px;
+  font-size: 14px;
 }
 </style>
 </head>
@@ -149,75 +294,141 @@ button:hover {
 <body>
 
 <div class="container">
-<h1>🤖 MarIA Avanzado con Memoria</h1>
-<p>Asistente inteligente con historial y prompts guardados</p>
+<h1>🤖 MarIA Avanzado con Memoria Completa</h1>
+<p>Asistente inteligente con emails múltiples, redacciones extensas y memoria</p>
 
 <div class="tutorial">
-<b>Ejemplos de uso:</b>
+<b>📚 Ejemplos de uso avanzado (formato original):</b>
 <ul>
-  <li>- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial</li>
-  <li>- Escribe WhatsApp a 620158203 indicando ley conmutativa</li>
+  <li>- Manda email a cliente@empresa.com con asunto IMPORTANTE y contenido profesional</li>
+  <li>- Manda email a: juan@empresa.com, maria@empresa.com, pedro@empresa.com con asunto REUNIÓN</li>
+  <li>- Escribe redacción extensa sobre los beneficios de la inteligencia artificial (800 palabras)</li>
   <li>- Publica tuit ACADEMICO sobre mi nuevo libro</li>
-  <li>- Busca artículos recientes sobre IA en Google</li>
   <li>1. Instala ollama (llama 3). 2. Terminal Mac: OLLAMA_ORIGINS="*" ollama serve 3. Abre este HTML. 4. Comprueba está corriendo: http://127.0.0.1:11434</li>
 </ul>
 </div>
 
 <div class="tab-container">
-  <div class="tab active" onclick="showTab('main')">Principal</div>
-  <div class="tab" onclick="showTab('saved')">Prompts Guardados</div>
-  <div class="tab" onclick="showTab('history')">Historial</div>
+  <div class="tab active" onclick="showTab('main')">📝 Principal</div>
+  <div class="tab" onclick="showTab('saved')">💾 Prompts Guardados</div>
+  <div class="tab" onclick="showTab('history')">📊 Historial</div>
+  <div class="tab" onclick="showTab('import-export')">🔄 Importar/Exportar</div>
 </div>
 
 <div id="tab-main" class="tab-content active">
   <div class="section">
-    <b>Acciones rápidas:</b><br>
-    <button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
-    <button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
-    <button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
-    <button class="quick-btn" onclick="quick('twitter')">🐦 Tuit</button>
-    <button class="quick-btn" onclick="quick('facebook')">📘 Facebook</button>
-    <button class="quick-btn" onclick="quick('linkedin')">🔗 LinkedIn</button>
-    <button class="quick-btn" onclick="quick('instagram')">📸 Instagram</button>
-    <button class="quick-btn" onclick="quick('texto')">✍️ Texto</button>
-    <button class="quick-btn" onclick="quick('buscar')">🔎 Google</button>
-    <button class="quick-btn" onclick="fillTemplate()">📝 Plantilla</button>
-  </div>
-
-  <div class="section">
-    <textarea id="prompt" rows="6" placeholder="Escribe aquí tus tareas, una por línea..."></textarea>
-    <div class="prompt-actions">
-      <button class="primary" onclick="generate()">Ejecutar</button>
-      <button class="save-btn" onclick="saveCurrentPrompt()">💾 Guardar Prompt</button>
+    <h2>🚀 Acciones Rápidas</h2>
+    <div class="quick-actions-grid">
+      <!-- Botones ORIGINALES -->
+      <button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
+      <button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
+      <button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
+      <button class="quick-btn" onclick="quick('twitter')">🐦 Tuit</button>
+      <button class="quick-btn" onclick="quick('facebook')">📘 Facebook</button>
+      <button class="quick-btn" onclick="quick('linkedin')">🔗 LinkedIn</button>
+      <button class="quick-btn" onclick="quick('instagram')">📸 Instagram</button>
+      <button class="quick-btn" onclick="quick('texto')">✍️ Texto simple</button>
+      <button class="quick-btn" onclick="quick('buscar')">🔎 Google</button>
+      
+      <!-- Emails avanzados -->
+      <button class="email-btn" onclick="quickEmail('profesional')">📧 Email Profesional</button>
+      <button class="email-btn" onclick="quickEmail('multiple')">📧 Email a Varios</button>
+      <button class="email-btn" onclick="quickEmail('comercial')">📧 Email Comercial</button>
+      <button class="email-btn" onclick="quickEmail('seguimiento')">📧 Email Seguimiento</button>
+      
+      <!-- Redacciones extensas -->
+      <button class="writing-btn" onclick="quickWriting('articulo')">📄 Artículo Blog</button>
+      <button class="writing-btn" onclick="quickWriting('informe')">📋 Informe Ejecutivo</button>
+      <button class="writing-btn" onclick="quickWriting('redaccion')">📝 Redacción Extensa</button>
+      <button class="writing-btn" onclick="quickWriting('ensayo')">📚 Ensayo Académico</button>
+      
+      <!-- Redes Sociales -->
+      <button class="social-btn" onclick="quick('twitter_hilo')">🐦 Hilo Twitter</button>
+      <button class="social-btn" onclick="quick('linkedin_pro')">🔗 Post LinkedIn</button>
+      <button class="social-btn" onclick="quick('instagram_post')">📸 Post Instagram</button>
+      
+      <!-- Búsquedas -->
+      <button class="business-btn" onclick="quick('busqueda_avanzada')">🔎 Búsqueda Avanzada</button>
+      
+      <!-- Plantillas -->
+      <button class="quick-btn" onclick="fillTemplate()">📝 Plantilla Múltiple</button>
+      <button class="quick-btn" onclick="fillTemplate('redes')">📝 Plantilla Redes</button>
+      <button class="quick-btn" onclick="fillTemplate('empresarial')">📝 Plantilla Empresa</button>
     </div>
   </div>
 
   <div class="section">
-    <h3>Resultados</h3>
-    <div id="results"></div>
+    <h2>✨ Área de Trabajo</h2>
+    <textarea id="prompt" rows="8" placeholder="Escribe aquí tus tareas (cada acción en una línea con guion): 
+- Manda email a cliente@empresa.com con asunto IMPORTANTE y contenido profesional
+- Manda email a: juan@empresa.com, maria@empresa.com con asunto REUNIÓN
+- Escribe redacción extensa sobre inteligencia artificial (800 palabras)
+- Publica tuit sobre el lanzamiento"></textarea>
+    <div class="prompt-actions">
+      <button class="primary" onclick="generate()">🚀 Ejecutar</button>
+      <button class="save-btn" onclick="saveCurrentPrompt()">💾 Guardar Prompt</button>
+      <button class="history-btn" onclick="showTab('history')">📊 Ver Historial</button>
+      <button class="quick-btn" onclick="clearPrompt()">🗑️ Limpiar</button>
+    </div>
   </div>
 
   <div class="section">
-    <h3>Contactos recientes</h3>
-    <div id="contacts"></div>
+    <h2>📋 Resultados</h2>
+    <div id="results"></div>
   </div>
 </div>
 
 <div id="tab-saved" class="tab-content">
   <div class="section">
-    <h3>Prompts Guardados</h3>
+    <h2>💾 Prompts Guardados</h2>
     <p>Haz clic en cualquier prompt para cargarlo en el área principal.</p>
+    <div class="prompt-actions">
+      <button class="export-btn" onclick="exportData('prompts')">📤 Exportar Prompts</button>
+      <button onclick="clearSavedPrompts()" style="background: #f44336; color: white;">🗑️ Borrar todos</button>
+    </div>
     <div id="saved-prompts"></div>
-    <button onclick="clearSavedPrompts()" style="background: #f44336; color: white;">🗑️ Borrar todos los prompts</button>
   </div>
 </div>
 
 <div id="tab-history" class="tab-content">
   <div class="section">
-    <h3>Historial de Ejecuciones</h3>
+    <h2>📊 Historial de Ejecuciones</h2>
     <p>Últimas consultas realizadas. Haz clic para reutilizar.</p>
+    <div class="prompt-actions">
+      <button class="export-btn" onclick="exportData('history')">📤 Exportar Historial</button>
+      <button onclick="clearHistory()" style="background: #f44336; color: white;">🗑️ Borrar historial</button>
+    </div>
     <div id="history-list"></div>
-    <button onclick="clearHistory()" style="background: #f44336; color: white;">🗑️ Borrar historial</button>
+  </div>
+</div>
+
+<div id="tab-import-export" class="tab-content">
+  <div class="section import-export">
+    <h2>🔄 Importar / Exportar Datos</h2>
+    
+    <div class="section">
+      <h3>📤 Exportar Todo</h3>
+      <p>Exporta todos tus prompts guardados y el historial en un solo archivo JSON.</p>
+      <button class="export-btn" onclick="exportAllData()">📥 Exportar Todo (Prompts + Historial)</button>
+    </div>
+
+    <div class="section">
+      <h3>📥 Importar Datos</h3>
+      <p>Importa datos desde un archivo JSON previamente exportado.</p>
+      <input type="file" id="importFile" accept=".json" style="display: none;">
+      <button class="import-btn" onclick="document.getElementById('importFile').click()">📤 Seleccionar Archivo JSON</button>
+      <button class="primary" onclick="importData()" style="margin-top: 10px;">📋 Importar Datos</button>
+      <p><small>El archivo debe tener el formato correcto (se valida automáticamente).</small></p>
+    </div>
+
+    <div class="section">
+      <h3>🔧 Opciones Avanzadas</h3>
+      <button onclick="createBackup()" class="quick-btn">💾 Crear Copia de Seguridad</button>
+      <button onclick="restoreBackup()" class="quick-btn">🔄 Restaurar Copia</button>
+      <button onclick="resetAllData()" style="background: #f44336; color: white;">⚠️ Restablecer Todo</button>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
   </div>
 </div>
 
@@ -230,7 +441,6 @@ let history = JSON.parse(localStorage.getItem('maria_history') || '[]');
 
 // Mostrar pestaña activa
 function showTab(tabName) {
-  // Ocultar todas las pestañas
   document.querySelectorAll('.tab-content').forEach(tab => {
     tab.classList.remove('active');
   });
@@ -238,11 +448,9 @@ function showTab(tabName) {
     tab.classList.remove('active');
   });
   
-  // Mostrar pestaña seleccionada
   document.getElementById('tab-' + tabName).classList.add('active');
   document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
   
-  // Cargar datos de la pestaña si es necesario
   if (tabName === 'saved') {
     loadSavedPrompts();
   } else if (tabName === 'history') {
@@ -256,20 +464,44 @@ function loadSavedPrompts() {
   if (!container) return;
   
   if (savedPrompts.length === 0) {
-    container.innerHTML = '<p>No tienes prompts guardados aún.</p>';
+    container.innerHTML = '<div class="status-message">No tienes prompts guardados aún. Guarda algunos desde la pestaña principal.</div>';
     return;
   }
   
   container.innerHTML = savedPrompts.map((prompt, index) => `
     <div class="saved-prompt">
-      <div class="timestamp">Guardado: ${new Date(prompt.timestamp).toLocaleString()}</div>
-      <div onclick="loadPrompt(${index})">${prompt.text}</div>
+      <div class="timestamp">
+        <span>Guardado: ${new Date(prompt.timestamp).toLocaleString()}</span>
+        <span class="action-tag ${getActionTagClass(prompt.action)}">${prompt.action || 'Guardado'}</span>
+      </div>
+      <div onclick="loadPrompt(${index})" style="font-weight: 500; margin: 8px 0; white-space: pre-wrap;">${prompt.text.substring(0, 150)}${prompt.text.length > 150 ? '...' : ''}</div>
       <div class="actions">
-        <button onclick="usePrompt(${index})" style="background: #2196F3; color: white;">Usar</button>
-        <button onclick="deletePrompt(${index})" style="background: #f44336; color: white;">Eliminar</button>
+        <button onclick="usePrompt(${index})" style="background: #2196F3; color: white;">↻ Usar</button>
+        <button onclick="editPrompt(${index})" style="background: #FF9800; color: white;">✏️ Editar</button>
+        <button onclick="deletePrompt(${index})" style="background: #f44336; color: white;">🗑️ Eliminar</button>
       </div>
     </div>
   `).join('');
+}
+
+// Obtener clase CSS para etiqueta de acción
+function getActionTagClass(action) {
+  const actionMap = {
+    'email': 'email-tag',
+    'whatsapp': 'whatsapp-tag',
+    'telegram': 'telegram-tag',
+    'twitter': 'social-tag',
+    'linkedin': 'social-tag',
+    'facebook': 'social-tag',
+    'instagram': 'social-tag',
+    'buscar': 'search-tag',
+    'writing': 'writing-tag',
+    'articulo': 'writing-tag',
+    'informe': 'writing-tag',
+    'redaccion': 'writing-tag',
+    'ensayo': 'writing-tag'
+  };
+  return actionMap[action] || 'email-tag';
 }
 
 // Cargar historial
@@ -278,14 +510,17 @@ function loadHistory() {
   if (!container) return;
   
   if (history.length === 0) {
-    container.innerHTML = '<p>No hay historial aún.</p>';
+    container.innerHTML = '<div class="status-message">No hay historial aún. Ejecuta algunos prompts para comenzar.</div>';
     return;
   }
   
   container.innerHTML = history.map((item, index) => `
     <div class="history-item">
-      <div class="timestamp">${new Date(item.timestamp).toLocaleString()} - ${item.action}</div>
-      <div onclick="loadHistoryPrompt(${index})">${item.prompt}</div>
+      <div class="timestamp">
+        <span>${new Date(item.timestamp).toLocaleString()}</span>
+        <span class="action-tag ${getActionTagClass(item.action)}">${item.action || 'Ejecución'}</span>
+      </div>
+      <div onclick="loadHistoryPrompt(${index})" style="margin: 8px 0; white-space: pre-wrap;">${item.prompt.substring(0, 120)}${item.prompt.length > 120 ? '...' : ''}</div>
     </div>
   `).join('');
 }
@@ -295,9 +530,12 @@ function saveCurrentPrompt() {
   const promptText = document.getElementById("prompt").value.trim();
   
   if (!promptText) {
-    alert('Por favor, escribe un prompt primero');
+    showStatus('Por favor, escribe un prompt primero', 'error');
     return;
   }
+  
+  // Detectar tipo de acción
+  const action = detectActionType(promptText);
   
   // Verificar si ya existe
   const exists = savedPrompts.some(p => p.text === promptText);
@@ -310,19 +548,20 @@ function saveCurrentPrompt() {
   // Guardar prompt
   savedPrompts.unshift({
     text: promptText,
+    action: action,
     timestamp: new Date().toISOString()
   });
   
-  // Mantener solo los últimos 50 prompts
-  if (savedPrompts.length > 50) {
-    savedPrompts = savedPrompts.slice(0, 50);
+  // Mantener solo los últimos 100 prompts
+  if (savedPrompts.length > 100) {
+    savedPrompts = savedPrompts.slice(0, 100);
   }
   
   // Guardar en localStorage
   localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
   
   // Mostrar mensaje de éxito
-  alert('Prompt guardado correctamente');
+  showStatus('✅ Prompt guardado correctamente', 'success');
   
   // Recargar lista si estamos en la pestaña de guardados
   if (document.getElementById('tab-saved').classList.contains('active')) {
@@ -330,11 +569,44 @@ function saveCurrentPrompt() {
   }
 }
 
+// Detectar tipo de acción del prompt
+function detectActionType(promptText) {
+  const text = promptText.toLowerCase();
+  if (text.includes('email') || text.includes('correo')) return 'email';
+  if (text.includes('whatsapp')) return 'whatsapp';
+  if (text.includes('telegram')) return 'telegram';
+  if (text.includes('twitter') || text.includes('tuit')) return 'twitter';
+  if (text.includes('linkedin')) return 'linkedin';
+  if (text.includes('facebook')) return 'facebook';
+  if (text.includes('instagram')) return 'instagram';
+  if (text.includes('buscar') || text.includes('google') || text.includes('búsqueda')) return 'buscar';
+  if (text.includes('artículo') || text.includes('blog') || text.includes('ensayo') || 
+      text.includes('redacción') || text.includes('informe') || text.includes('extensa') ||
+      text.includes('palabras')) return 'writing';
+  return 'texto';
+}
+
 // Cargar prompt para ver
 function loadPrompt(index) {
   if (savedPrompts[index]) {
     document.getElementById("prompt").value = savedPrompts[index].text;
     showTab('main');
+    showStatus('✅ Prompt cargado en el área principal', 'success');
+  }
+}
+
+// Editar prompt
+function editPrompt(index) {
+  if (savedPrompts[index]) {
+    const newText = prompt('Edita el prompt:', savedPrompts[index].text);
+    if (newText !== null && newText.trim() !== '') {
+      savedPrompts[index].text = newText.trim();
+      savedPrompts[index].timestamp = new Date().toISOString();
+      savedPrompts[index].action = detectActionType(newText);
+      localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
+      loadSavedPrompts();
+      showStatus('✅ Prompt editado correctamente', 'success');
+    }
   }
 }
 
@@ -343,7 +615,7 @@ function usePrompt(index) {
   if (savedPrompts[index]) {
     document.getElementById("prompt").value = savedPrompts[index].text;
     showTab('main');
-    generate(); // Ejecutar automáticamente
+    setTimeout(() => generate(), 300);
   }
 }
 
@@ -353,6 +625,7 @@ function deletePrompt(index) {
     savedPrompts.splice(index, 1);
     localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
     loadSavedPrompts();
+    showStatus('✅ Prompt eliminado', 'success');
   }
 }
 
@@ -361,13 +634,19 @@ function loadHistoryPrompt(index) {
   if (history[index]) {
     document.getElementById("prompt").value = history[index].prompt;
     showTab('main');
+    showStatus('✅ Prompt del historial cargado', 'success');
   }
+}
+
+// Limpiar área de prompt
+function clearPrompt() {
+  document.getElementById("prompt").value = '';
 }
 
 // Borrar todos los prompts guardados
 function clearSavedPrompts() {
   if (savedPrompts.length === 0) {
-    alert('No hay prompts guardados para borrar');
+    showStatus('No hay prompts guardados para borrar', 'error');
     return;
   }
   
@@ -375,13 +654,14 @@ function clearSavedPrompts() {
     savedPrompts = [];
     localStorage.removeItem('maria_saved_prompts');
     loadSavedPrompts();
+    showStatus('✅ Todos los prompts han sido eliminados', 'success');
   }
 }
 
 // Borrar historial
 function clearHistory() {
   if (history.length === 0) {
-    alert('No hay historial para borrar');
+    showStatus('No hay historial para borrar', 'error');
     return;
   }
   
@@ -389,6 +669,7 @@ function clearHistory() {
     history = [];
     localStorage.removeItem('maria_history');
     loadHistory();
+    showStatus('✅ Historial borrado', 'success');
   }
 }
 
@@ -396,62 +677,338 @@ function clearHistory() {
 function addToHistory(promptText, action) {
   history.unshift({
     prompt: promptText,
-    action: action || 'Ejecución',
+    action: action || detectActionType(promptText),
     timestamp: new Date().toISOString()
   });
   
-  // Mantener solo los últimos 100 registros
-  if (history.length > 100) {
-    history = history.slice(0, 100);
+  if (history.length > 200) {
+    history = history.slice(0, 200);
   }
   
   localStorage.setItem('maria_history', JSON.stringify(history));
 }
 
-// Funciones originales (modificadas para incluir historial)
+// ========== ACCIONES RÁPIDAS MEJORADAS ==========
+
+// Funciones ORIGINALES con formato correcto
 function quick(type){
   const presets = {
-    email: "Manda email a @gmail.com con asunto IMPORTANTE solicitando -",
-    whatsapp: "Escribe WhatsApp a 620158203",
-    telegram: "Envía mensaje a Telegram a 34620158203",
-    twitter: "Publica tuit ACADEMICO sobre mi nuevo libro",
-    facebook: "Publica en Facebook sobre mi nuevo libro",
-    linkedin: "Publica en LinkedIn sobre mi perfil profesional",
-    instagram: "Prepara texto para Instagram sobre foto del libro",
-    texto: "Explícame un concepto de forma sencilla",
-    buscar: "Busca en Google artículos sobre inteligencia artificial"
+    'email': "- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial",
+    'whatsapp': "- Escribe WhatsApp a 620158203 indicando ley conmutativa",
+    'telegram': "- Envía mensaje a Telegram a 34620158203 sobre la reunión",
+    'twitter': "- Publica tuit ACADEMICO sobre mi nuevo libro",
+    'facebook': "- Publica en Facebook sobre mi nuevo libro",
+    'linkedin': "- Publica en LinkedIn sobre mi perfil profesional",
+    'instagram': "- Prepara texto para Instagram sobre foto del libro",
+    'texto': "- Explícame un concepto de forma sencilla",
+    'buscar': "- Busca en Google artículos sobre inteligencia artificial",
+    
+    // Nuevas acciones mejoradas
+    'twitter_hilo': "- Crea un hilo de Twitter (3-4 tuits) sobre los beneficios de la inteligencia artificial",
+    'linkedin_pro': "- Escribe post profesional para LinkedIn sobre tendencias actuales",
+    'instagram_post': "- Crea texto para post de Instagram con foto del equipo de trabajo",
+    'busqueda_avanzada': "- Busca en Google información sobre aplicaciones prácticas de IA"
   };
+  
   const promptText = presets[type];
-  document.getElementById("prompt").value = promptText;
-  addToHistory(promptText, `Acción rápida: ${type}`);
+  if (promptText) {
+    document.getElementById("prompt").value = promptText;
+    addToHistory(promptText, type);
+    showStatus(`✅ Acción rápida "${type}" cargada`, 'success');
+  }
 }
 
-function fillTemplate(){
-  const template = `- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial
+// Funciones para emails avanzados (formato original mejorado)
+function quickEmail(type) {
+  const emailTemplates = {
+    'profesional': "- Manda email a cliente@empresa.com con asunto 'Propuesta de Colaboración' y contenido profesional detallado",
+    
+    'multiple': `- Manda email a: juan@empresa.com, maria@empresa.com, pedro@empresa.com con asunto 'Reunión Importante' y contenido profesional`,
+    
+    'comercial': "- Manda email a prospecto@cliente.com con asunto 'Oferta Especial' y contenido comercial persuasivo",
+    
+    'seguimiento': "- Manda email a cliente@empresa.com con asunto 'Seguimiento de nuestra conversación' y contenido profesional de seguimiento"
+  };
+  
+  const promptText = emailTemplates[type];
+  document.getElementById("prompt").value = promptText;
+  addToHistory(promptText, `email_${type}`);
+  showStatus(`✅ Plantilla de email "${type}" cargada`, 'success');
+}
+
+// Funciones para redacciones extensas
+function quickWriting(type) {
+  const writingTemplates = {
+    'articulo': "- Escribe artículo de blog extenso (1200 palabras) sobre 'El Futuro de la Inteligencia Artificial en 2024'",
+    
+    'informe': "- Redacta informe ejecutivo completo (1000 palabras) sobre 'Estado Actual del Proyecto de Digitalización'",
+    
+    'redaccion': "- Escribe redacción extensa y detallada (800 palabras) sobre 'Los Desafíos de la Transformación Digital en las PYMES'",
+    
+    'ensayo': "- Desarrolla ensayo académico completo (1500 palabras) sobre 'El Impacto Ético de la Inteligencia Artificial en la Sociedad'"
+  };
+  
+  const promptText = writingTemplates[type];
+  document.getElementById("prompt").value = promptText;
+  addToHistory(promptText, `writing_${type}`);
+  showStatus(`✅ Plantilla de redacción "${type}" cargada`, 'success');
+}
+
+// Plantillas mejoradas con formato correcto
+function fillTemplate(type = 'completa') {
+  const templates = {
+    'completa': `- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial
 - Escribe WhatsApp a 620158203 indicando puntos clave
 - Envía mensaje a Telegram a 34620158203
 - Publica en LinkedIn sobre mi perfil
-- Busca en Google artículos recientes sobre IA`;
+- Busca en Google artículos recientes sobre IA`,
+    
+    'redes': `- Publica tuit sobre el lanzamiento del libro
+- Comparte post en LinkedIn para profesionales
+- Prepara texto para Instagram con foto promocional
+- Publica actualización en Facebook para seguidores`,
+    
+    'empresarial': `- Manda email a equipo@empresa.com con asunto 'Nuevas Políticas' y contenido corporativo
+- Redacta comunicado de prensa sobre el lanzamiento del nuevo producto
+- Actualiza información corporativa en el sitio web`
+  };
   
+  const template = templates[type];
   document.getElementById("prompt").value = template;
-  addToHistory(template, 'Plantilla cargada');
+  addToHistory(template, 'Plantilla: ' + type);
+  showStatus(`✅ Plantilla "${type}" cargada`, 'success');
 }
 
-async function generate(){
-  const promptText = document.getElementById("prompt").value.trim();
-  if (!promptText) {
-    alert('Por favor, escribe un prompt primero');
+// ========== IMPORTACIÓN/EXPORTACIÓN ==========
+function exportData(type) {
+  let data, filename;
+  
+  if (type === 'prompts') {
+    data = { savedPrompts: savedPrompts };
+    filename = `maria_prompts_${new Date().toISOString().split('T')[0]}.json`;
+  } else if (type === 'history') {
+    data = { history: history };
+    filename = `maria_historial_${new Date().toISOString().split('T')[0]}.json`;
+  }
+  
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showStatus(`✅ ${type === 'prompts' ? 'Prompts' : 'Historial'} exportado correctamente`, 'success');
+}
+
+function exportAllData() {
+  const data = {
+    savedPrompts: savedPrompts,
+    history: history,
+    exportDate: new Date().toISOString(),
+    version: '1.0'
+  };
+  
+  const filename = `maria_backup_completo_${new Date().toISOString().split('T')[0]}.json`;
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showStatus('✅ Todos los datos exportados correctamente', 'success');
+}
+
+function importData() {
+  const fileInput = document.getElementById('importFile');
+  if (!fileInput.files.length) {
+    showStatus('Por favor, selecciona un archivo primero', 'error');
     return;
   }
   
-  // Añadir al historial
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      
+      if (!data.savedPrompts && !data.history) {
+        throw new Error('Formato de archivo inválido');
+      }
+      
+      let importedPrompts = 0;
+      let importedHistory = 0;
+      
+      if (data.savedPrompts && Array.isArray(data.savedPrompts)) {
+        savedPrompts = [...savedPrompts, ...data.savedPrompts];
+        savedPrompts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        savedPrompts = savedPrompts.filter((prompt, index, self) =>
+          index === self.findIndex(p => p.text === prompt.text)
+        );
+        if (savedPrompts.length > 100) {
+          savedPrompts = savedPrompts.slice(0, 100);
+        }
+        localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
+        importedPrompts = data.savedPrompts.length;
+      }
+      
+      if (data.history && Array.isArray(data.history)) {
+        history = [...history, ...data.history];
+        history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        history = history.filter((item, index, self) =>
+          index === self.findIndex(h => h.prompt === item.prompt && h.timestamp === item.timestamp)
+        );
+        if (history.length > 200) {
+          history = history.slice(0, 200);
+        }
+        localStorage.setItem('maria_history', JSON.stringify(history));
+        importedHistory = data.history.length;
+      }
+      
+      loadSavedPrompts();
+      loadHistory();
+      
+      showStatus(`✅ Datos importados: ${importedPrompts} prompts, ${importedHistory} registros de historial`, 'success');
+      fileInput.value = '';
+      
+    } catch (error) {
+      showStatus('❌ Error al importar archivo: ' + error.message, 'error');
+    }
+  };
+  
+  reader.readAsText(file);
+}
+
+function createBackup() {
+  exportAllData();
+}
+
+function restoreBackup() {
+  document.getElementById('importFile').click();
+}
+
+function resetAllData() {
+  if (confirm('⚠️ ¿Restablecer TODOS los datos? Esto borrará prompts e historial. No se puede deshacer.')) {
+    localStorage.removeItem('maria_saved_prompts');
+    localStorage.removeItem('maria_history');
+    savedPrompts = [];
+    history = [];
+    loadSavedPrompts();
+    loadHistory();
+    showStatus('✅ Todos los datos han sido restablecidos', 'success');
+  }
+}
+
+function showStatus(message, type) {
+  const statusDiv = document.getElementById('status-message') || createStatusElement();
+  statusDiv.textContent = message;
+  statusDiv.className = `status-message status-${type}`;
+  statusDiv.style.display = 'block';
+  
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 5000);
+}
+
+function createStatusElement() {
+  const div = document.createElement('div');
+  div.id = 'status-message';
+  document.querySelector('.import-export').appendChild(div);
+  return div;
+}
+
+// ========== FUNCIÓN GENERATE MEJORADA ==========
+async function generate() {
+  const promptText = document.getElementById("prompt").value.trim();
+  if (!promptText) {
+    showStatus('Por favor, escribe un prompt primero', 'error');
+    return;
+  }
+  
   addToHistory(promptText, 'Ejecución completa');
   
+  // Procesar líneas manteniendo el formato original
   const lines = promptText.split("\n").filter(l => l.trim() !== "");
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
-  const systemInstruction = `
+  for (const line of lines) {
+    try {
+      // Detectar si es un email a múltiples destinatarios
+      const emailMatch = line.match(/^- Manda email a:?\s*(.+?)\s+(?:con asunto|y asunto)\s+(.+?)\s+(?:y contenido|con contenido)\s+(.+)/i);
+      const emailMatch2 = line.match(/^- Manda email a\s+(.+?)\s+(?:con asunto|y asunto)\s+(.+?)\s+(?:y contenido|con contenido)\s+(.+)/i);
+      
+      let res;
+      let isEmail = false;
+      let isMultipleEmail = false;
+      let destinatarios = [];
+      let asunto = '';
+      let contenidoPrompt = '';
+      
+      // Procesar emails (formato original)
+      if (emailMatch || emailMatch2) {
+        isEmail = true;
+        const match = emailMatch || emailMatch2;
+        
+        // Extraer destinatarios (pueden ser múltiples)
+        const destinatariosRaw = match[1].trim();
+        
+        // Verificar si hay múltiples destinatarios separados por comas
+        if (destinatariosRaw.includes(',')) {
+          isMultipleEmail = true;
+          destinatarios = destinatariosRaw.split(',').map(d => d.trim()).filter(d => d);
+        } else {
+          destinatarios = [destinatariosRaw];
+        }
+        
+        asunto = match[2].trim().replace(/['"]/g, '');
+        contenidoPrompt = match[3].trim();
+        
+        // Crear prompt específico para email
+        const emailPrompt = `Genera un email profesional con asunto: "${asunto}" y contenido sobre: "${contenidoPrompt}". 
+        El email debe incluir saludo formal, cuerpo del mensaje y despedida profesional. 
+        Responde SOLO con el contenido del email, sin explicaciones adicionales.`;
+        
+        const response = await fetch("http://localhost:11434/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "llama3",
+            prompt: emailPrompt,
+            stream: false,
+            options: {
+              temperature: 0.7,
+              num_predict: 1500
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const contenido = data.response.trim();
+        
+        res = {
+          accion: "email",
+          destinatario: isMultipleEmail ? destinatarios.join(", ") : destinatarios[0],
+          destinatarios: isMultipleEmail ? destinatarios : undefined,
+          asunto: asunto,
+          contenido: contenido
+        };
+        
+      } else {
+        // Procesar otras acciones con el sistema original
+        const systemInstruction = `
 Responde SOLO en JSON válido.
 
 FORMATO GENERAL:
@@ -471,88 +1028,361 @@ FORMATO MEJORADO SOLO PARA BUSCAR:
 REGLAS:
 - Emails profesionales con asunto
 - Búsquedas: genera varias consultas útiles
-- No escribas texto fuera del JSON
-`;
+- No escribas texto fuera del JSON`;
 
-  for(const line of lines){
-    try{
-      const r = await fetch("http://localhost:11434/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "llama3",
-          prompt: systemInstruction + "\nUsuario: " + line,
-          stream: false
-        })
-      });
-
-      const data = await r.json();
-      const res = JSON.parse(data.response);
-
-      /* 🔎 GOOGLE MEJORADO + COMPATIBLE */
-      if(res.accion === "buscar"){
-        let queries = [];
-
-        if(Array.isArray(res.consultas)){
-          queries = res.consultas;
-        } else if(res.contenido){
-          queries = res.contenido.split("\n").filter(Boolean);
-        }
-
-        queries.forEach(q=>{
-          window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank");
+        const response = await fetch("http://localhost:11434/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "llama3",
+            prompt: systemInstruction + "\nUsuario: " + line,
+            stream: false
+          })
         });
 
-        const block = document.createElement("div");
-        block.className = "result-block";
-        block.innerHTML = "<b>Búsquedas:</b><br>" + queries.map(q=>"🔎 "+q).join("<br>");
-        resultsDiv.appendChild(block);
-        continue;
-      }
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
 
-      if(res.accion === "whatsapp"){
-        window.open(`https://wa.me/${res.destinatario}?text=${encodeURIComponent(res.contenido)}`);
+        const data = await response.json();
+        
+        // Intentar parsear JSON
+        try {
+          res = JSON.parse(data.response);
+        } catch (parseError) {
+          console.error('Error parsing JSON:', data.response);
+          // Si es una redacción extensa, crear respuesta directa
+          if (line.toLowerCase().includes('redacción') || line.toLowerCase().includes('artículo') || 
+              line.toLowerCase().includes('informe') || line.toLowerCase().includes('ensayo')) {
+            res = {
+              accion: "redaccion",
+              contenido: data.response
+            };
+          } else {
+            throw new Error('La respuesta no es JSON válido');
+          }
+        }
       }
-      if(res.accion === "telegram"){
-        const phone = res.destinatario.replace(/\s+/g, "");
-        window.open(
-          `https://t.me/+${phone}?text=${encodeURIComponent(res.contenido)}`,
-          "_blank"
-        );
-      }
+      
+      // Procesar la respuesta
+      await processResponse(res, line, resultsDiv, isEmail, isMultipleEmail, destinatarios, asunto);
 
-      if(res.accion === "twitter"){
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(res.contenido)}`);
-      }
-      if(res.accion === "email"){
-        window.open(
-          "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-          encodeURIComponent(res.destinatario) +
-          "&su=" + encodeURIComponent(res.asunto) +
-          "&body=" + encodeURIComponent(res.contenido)
-        );
-      }
-
-      const block = document.createElement("div");
-      block.className = "result-block";
-      block.innerHTML = `<textarea rows="5">${res.contenido}</textarea>`;
-      resultsDiv.appendChild(block);
-
-    } catch(e){
-      console.error(e);
+    } catch (error) {
+      console.error('Error en generate:', error);
       const errorBlock = document.createElement("div");
       errorBlock.className = "result-block";
-      errorBlock.innerHTML = `<b>Error:</b> ${e.message}`;
+      errorBlock.innerHTML = `
+        <b>❌ Error procesando: "${line.substring(0, 50)}..."</b><br>
+        <small>${error.message}</small><br>
+        <small>Asegúrate de que Ollama esté corriendo en http://localhost:11434</small>
+      `;
       resultsDiv.appendChild(errorBlock);
     }
   }
+  
+  showStatus('✅ Comandos procesados correctamente', 'success');
+}
+
+// Función para procesar diferentes tipos de respuestas
+async function processResponse(res, originalLine, resultsDiv, isEmail = false, isMultipleEmail = false, destinatarios = [], asunto = '') {
+  const action = res.accion || "";
+  
+  // 📧 EMAILS (INDIVIDUAL O MÚLTIPLE) - LÓGICA ORIGINAL MEJORADA
+// 👉 ABRIR GMAIL AUTOMÁTICAMENTE
+  if (action === "email" || isEmail) {
+ if (!isMultipleEmail && res.destinatario && res.contenido) {
+   openEmailInGmail(
+     res.destinatario,
+     res.asunto || asunto || "Sin asunto",
+     res.contenido
+   );
+ }
+    const block = document.createElement("div");
+    block.className = "result-block email-result";
+    
+    const emailDestinatarios = isMultipleEmail ? destinatarios : [res.destinatario || ''];
+    const emailAsunto = asunto || res.asunto || "Sin asunto";
+    const emailContenido = res.contenido || "No se generó contenido";
+    
+    if (isMultipleEmail && destinatarios.length > 1) {
+      block.innerHTML = `
+        <b>📧 EMAIL PARA MÚLTIPLES DESTINATARIOS</b>
+        <div class="recipients-list">
+          <strong>Para:</strong> ${destinatarios.join(", ")}
+        </div>
+        <div style="margin: 8px 0; padding: 10px; background: #f1f8e9; border-radius: 6px;">
+          <strong>Asunto:</strong> ${emailAsunto}
+        </div>
+        <textarea rows="10" style="width: 100%; margin-top: 10px; font-size: 14px;">${emailContenido}</textarea>
+      `;
+      
+      // Botones para abrir emails (uno por cada destinatario)
+      const actionsDiv = document.createElement("div");
+      actionsDiv.className = "email-actions";
+      
+      if (destinatarios.length > 1) {
+        actionsDiv.innerHTML += `
+          <button onclick="openMultipleEmailsSeparately(${JSON.stringify(destinatarios)}, ${JSON.stringify(emailAsunto)}, ${JSON.stringify(emailContenido)})" style="background: #4CAF50; color: white;">
+            📧 Abrir TODOS los emails
+          </button>
+        `;
+      }
+      
+      // Botón para abrir el primer email
+      if (destinatarios.length > 0) {
+        actionsDiv.innerHTML += `
+          <button onclick="openEmailInGmail('${destinatarios[0]}', ${JSON.stringify(emailAsunto)}, ${JSON.stringify(emailContenido)})" style="background: #2196F3; color: white;">
+            📧 Abrir primer email
+          </button>
+        `;
+      }
+      
+      actionsDiv.innerHTML += `
+        <button onclick="copyToClipboard(${JSON.stringify(emailContenido)})" style="background: #FF9800; color: white;">
+          📋 Copiar contenido
+        </button>
+      `;
+      
+      block.appendChild(actionsDiv);
+      
+    } else {
+      // Email individual
+      const destinatario = emailDestinatarios[0] || res.destinatario || "No especificado";
+      
+      block.innerHTML = `
+        <b>📧 EMAIL</b>
+        <div style="margin: 8px 0; padding: 10px; background: #e8f5e9; border-radius: 6px;">
+          <strong>Para:</strong> ${destinatario}
+        </div>
+        <div style="margin: 8px 0; padding: 10px; background: #f1f8e9; border-radius: 6px;">
+          <strong>Asunto:</strong> ${emailAsunto}
+        </div>
+        <textarea rows="10" style="width: 100%; margin-top: 10px; font-size: 14px;">${emailContenido}</textarea>
+      `;
+      
+      // Botón para abrir en Gmail si hay destinatario
+      if (destinatario && destinatario !== "No especificado" && emailContenido) {
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "email-actions";
+        actionsDiv.innerHTML = `
+          <button onclick="openEmailInGmail('${destinatario}', ${JSON.stringify(emailAsunto)}, ${JSON.stringify(emailContenido)})" style="background: #4CAF50; color: white;">
+            📧 Abrir en Gmail
+          </button>
+          <button onclick="copyToClipboard(${JSON.stringify(emailContenido)})" style="background: #2196F3; color: white;">
+            📋 Copiar contenido
+          </button>
+        `;
+        block.appendChild(actionsDiv);
+      }
+    }
+    
+    resultsDiv.appendChild(block);
+  }
+  
+  // 📝 REDACCIÓN EXTENSA
+  else if (action === "redaccion" || (res.contenido && originalLine.toLowerCase().includes('redacción'))) {
+    const block = document.createElement("div");
+    block.className = "result-block writing-result";
+    
+    const wordCount = res.contenido ? res.contenido.split(/\s+/).length : 0;
+    
+    block.innerHTML = `
+      <b>📝 REDACCIÓN EXTENSA (${wordCount} palabras)</b>
+      <textarea rows="15" style="width: 100%; margin-top: 10px; font-size: 14px; line-height: 1.6;">${res.contenido}</textarea>
+    `;
+    
+    const actionsDiv = document.createElement("div");
+    actionsDiv.className = "email-actions";
+    actionsDiv.innerHTML = `
+      <button onclick="copyToClipboard(${JSON.stringify(res.contenido)})" style="background: #2196F3; color: white;">
+        📋 Copiar contenido completo
+      </button>
+      <button onclick="downloadText(${JSON.stringify(res.contenido)}, 'redaccion')" style="background: #4CAF50; color: white;">
+        💾 Descargar como TXT
+      </button>
+    `;
+    block.appendChild(actionsDiv);
+    
+    resultsDiv.appendChild(block);
+  }
+  
+  // 🔎 BÚSQUEDAS
+  else if (action === "buscar") {
+    let queries = [];
+    
+    if (Array.isArray(res.consultas)) {
+      queries = res.consultas.slice(0, 3);
+    } else if (res.contenido) {
+      queries = res.contenido.split("\n").filter(Boolean).slice(0, 3);
+    } else {
+      queries = [originalLine.substring(0, 100)];
+    }
+    
+    queries.forEach(q => {
+      window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank");
+    });
+    
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = "<b>🔎 Búsquedas realizadas:</b><br>" + 
+      queries.map(q => "• " + q).join("<br>");
+    resultsDiv.appendChild(block);
+  }
+  
+  // 📱 TELEGRAM
+  else if (action === "telegram" && res.destinatario && res.contenido) {
+    const phone = res.destinatario.toString().replace(/\D/g, '');
+    if (phone) {
+      window.open(`https://t.me/+${phone}?text=${encodeURIComponent(res.contenido)}`, "_blank");
+    }
+    
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>📱 Telegram</b>
+      <div style="margin: 8px 0; padding: 10px; background: #e3f2fd; border-radius: 6px;">
+        <strong>Para:</strong> ${res.destinatario}
+      </div>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 💬 WHATSAPP
+  else if (action === "whatsapp" && res.destinatario && res.contenido) {
+    const phone = res.destinatario.toString().replace(/\D/g, '');
+    if (phone) {
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(res.contenido)}`, "_blank");
+    }
+    
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>💬 WhatsApp</b>
+      <div style="margin: 8px 0; padding: 10px; background: #e3f2fd; border-radius: 6px;">
+        <strong>Para:</strong> ${res.destinatario}
+      </div>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 🐦 TWITTER
+  else if (action === "twitter" && res.contenido) {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(res.contenido.substring(0, 280))}`, "_blank");
+    
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>🐦 Twitter</b>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 📘 FACEBOOK
+  else if (action === "facebook" && res.contenido) {
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>📘 Facebook</b>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 🔗 LINKEDIN
+  else if (action === "linkedin" && res.contenido) {
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>🔗 LinkedIn</b>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 📸 INSTAGRAM
+  else if (action === "instagram" && res.contenido) {
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>📸 Instagram</b>
+      <textarea rows="4" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+  
+  // 📝 TEXTO SIMPLE
+  else if (res.contenido) {
+    const block = document.createElement("div");
+    block.className = "result-block";
+    block.innerHTML = `
+      <b>${action ? action.toUpperCase() : 'TEXTO'}:</b>
+      <textarea rows="6" style="width: 100%; margin-top: 10px;">${res.contenido}</textarea>
+    `;
+    resultsDiv.appendChild(block);
+  }
+}
+
+// Función para abrir email en Gmail (lógica original)
+function openEmailInGmail(destinatario, asunto, contenido) {
+  const gmailUrl =
+    "https://mail.google.com/mail/?view=cm&fs=1" +
+    "&to=" + encodeURIComponent(destinatario) +
+    "&su=" + encodeURIComponent(asunto || "") +
+    "&body=" + encodeURIComponent(contenido || "");
+
+  window.open(gmailUrl, "_blank");
+}
+
+function openMultipleEmailsSeparately(destinatarios, asunto, contenido) {
+  destinatarios.forEach(dest => {
+    openEmailInGmail(dest, asunto, contenido);
+  });
+}
+
+
+// Función para copiar al portapapeles
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showStatus('✅ Contenido copiado al portapapeles', 'success');
+  }).catch(err => {
+    showStatus('❌ Error al copiar: ' + err, 'error');
+  });
+}
+
+// Función para descargar texto como archivo
+function downloadText(content, filename = 'redaccion') {
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${filename}_${new Date().toISOString().split('T')[0]}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showStatus('✅ Texto descargado como archivo TXT', 'success');
 }
 
 // Inicializar al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-  // Cargar datos iniciales
+  document.getElementById('importFile').addEventListener('change', function() {
+    if (this.files.length) {
+      showStatus('Archivo seleccionado. Haz clic en "Importar Datos" para continuar.', 'success');
+    }
+  });
+  
   loadSavedPrompts();
   loadHistory();
+  
+  // Mensaje inicial de ayuda
+  setTimeout(() => {
+    if (savedPrompts.length === 0 && history.length === 0) {
+      showStatus('💡 Usa las acciones rápidas para empezar, luego guárdalas para reutilizar.', 'success');
+    }
+  }, 1000);
 });
 </script>
 
