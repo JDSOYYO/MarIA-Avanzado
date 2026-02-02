@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MarIA – Asistente Inteligente Avanzado con Memoria</title>
+<!-- Añadir jsPDF para exportación a PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
+/* TODOS LOS ESTILOS ORIGINALES SE MANTIENEN EXACTAMENTE IGUAL */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   background: #f0f2f5;
@@ -288,14 +291,45 @@ button:hover {
   border-radius: 6px;
   font-size: 14px;
 }
+
+/* NUEVOS ESTILOS PARA PDF (se añaden al final) */
+.pdf-export-btn {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  margin-left: 8px;
+}
+
+.pdf-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.writing-stats {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.writing-stats span {
+  padding: 4px 8px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>🤖 MarIA Avanzado con Memoria Completa</h1>
-<p>Asistente inteligente con emails múltiples, redacciones extensas y memoria</p>
+<h1>🤖 MarIA Avanzado con Memoria Completa + PDF</h1>
+<p>Asistente inteligente con emails múltiples, redacciones extensas, memoria y exportación a PDF</p>
 
 <div class="tutorial">
 <b>📚 Ejemplos de uso avanzado (formato original):</b>
@@ -303,6 +337,7 @@ button:hover {
   <li>- Manda email a cliente@empresa.com con asunto IMPORTANTE y contenido profesional</li>
   <li>- Manda email a: juan@empresa.com, maria@empresa.com, pedro@empresa.com con asunto REUNIÓN</li>
   <li>- Escribe redacción extensa sobre los beneficios de la inteligencia artificial (800 palabras)</li>
+  <li>- Genera artículo sobre cambio climático y expórtalo a PDF</li>
   <li>- Publica tuit ACADEMICO sobre mi nuevo libro</li>
   <li>1. Instala ollama (llama 3). 2. Terminal Mac: OLLAMA_ORIGINS="*" ollama serve 3. Abre este HTML. 4. Comprueba está corriendo: http://127.0.0.1:11434</li>
 </ul>
@@ -319,7 +354,7 @@ button:hover {
   <div class="section">
     <h2>🚀 Acciones Rápidas</h2>
     <div class="quick-actions-grid">
-      <!-- Botones ORIGINALES -->
+      <!-- Botones ORIGINALES - EXACTAMENTE IGUAL -->
       <button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
       <button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
       <button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
@@ -342,6 +377,11 @@ button:hover {
       <button class="writing-btn" onclick="quickWriting('redaccion')">📝 Redacción Extensa</button>
       <button class="writing-btn" onclick="quickWriting('ensayo')">📚 Ensayo Académico</button>
       
+      <!-- NUEVO: Redacciones con PDF -->
+      <button class="writing-btn" onclick="quickWritingPDF('articulo_pdf')">📄 Artículo + PDF</button>
+      <button class="writing-btn" onclick="quickWritingPDF('informe_pdf')">📋 Informe + PDF</button>
+      <button class="writing-btn" onclick="quickWritingPDF('ensayo_pdf')">📚 Ensayo + PDF</button>
+      
       <!-- Redes Sociales -->
       <button class="social-btn" onclick="quick('twitter_hilo')">🐦 Hilo Twitter</button>
       <button class="social-btn" onclick="quick('linkedin_pro')">🔗 Post LinkedIn</button>
@@ -363,7 +403,9 @@ button:hover {
 - Manda email a cliente@empresa.com con asunto IMPORTANTE y contenido profesional
 - Manda email a: juan@empresa.com, maria@empresa.com con asunto REUNIÓN
 - Escribe redacción extensa sobre inteligencia artificial (800 palabras)
+- Genera informe ejecutivo sobre proyecto y expórtalo a PDF
 - Publica tuit sobre el lanzamiento"></textarea>
+    
     <div class="prompt-actions">
       <button class="primary" onclick="generate()">🚀 Ejecutar</button>
       <button class="save-btn" onclick="saveCurrentPrompt()">💾 Guardar Prompt</button>
@@ -435,9 +477,14 @@ button:hover {
 </div>
 
 <script>
+// ========== CÓDIGO ORIGINAL COMPLETO (SE MANTIENE EXACTO) ==========
+
 // Variables globales para manejar memoria
 let savedPrompts = JSON.parse(localStorage.getItem('maria_saved_prompts') || '[]');
 let history = JSON.parse(localStorage.getItem('maria_history') || '[]');
+
+// NUEVA: Variable para almacenar redacciones
+let writings = JSON.parse(localStorage.getItem('maria_writings') || '[]');
 
 // Mostrar pestaña activa
 function showTab(tabName) {
@@ -754,6 +801,22 @@ function quickWriting(type) {
   showStatus(`✅ Plantilla de redacción "${type}" cargada`, 'success');
 }
 
+// NUEVA: Plantillas para redacciones con PDF
+function quickWritingPDF(type) {
+  const pdfTemplates = {
+    'articulo_pdf': "- Genera artículo profesional sobre inteligencia artificial y expórtalo a PDF (1200 palabras)",
+    'informe_pdf': "- Redacta informe ejecutivo completo sobre transformación digital y expórtalo a PDF (1000 palabras)",
+    'ensayo_pdf': "- Desarrolla ensayo académico sobre ética en IA y expórtalo a PDF (1500 palabras)"
+  };
+  
+  const promptText = pdfTemplates[type];
+  if (promptText) {
+    document.getElementById("prompt").value = promptText;
+    addToHistory(promptText, `writing_pdf_${type}`);
+    showStatus(`✅ Plantilla "${type}" cargada - se exportará a PDF`, 'success');
+  }
+}
+
 // Plantillas mejoradas con formato correcto
 function fillTemplate(type = 'completa') {
   const templates = {
@@ -808,6 +871,7 @@ function exportAllData() {
   const data = {
     savedPrompts: savedPrompts,
     history: history,
+    writings: writings,
     exportDate: new Date().toISOString(),
     version: '1.0'
   };
@@ -840,12 +904,13 @@ function importData() {
     try {
       const data = JSON.parse(e.target.result);
       
-      if (!data.savedPrompts && !data.history) {
+      if (!data.savedPrompts && !data.history && !data.writings) {
         throw new Error('Formato de archivo inválido');
       }
       
       let importedPrompts = 0;
       let importedHistory = 0;
+      let importedWritings = 0;
       
       if (data.savedPrompts && Array.isArray(data.savedPrompts)) {
         savedPrompts = [...savedPrompts, ...data.savedPrompts];
@@ -873,10 +938,23 @@ function importData() {
         importedHistory = data.history.length;
       }
       
+      if (data.writings && Array.isArray(data.writings)) {
+        writings = [...writings, ...data.writings];
+        writings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        writings = writings.filter((writing, index, self) =>
+          index === self.findIndex(w => w.id === writing.id)
+        );
+        if (writings.length > 50) {
+          writings = writings.slice(0, 50);
+        }
+        localStorage.setItem('maria_writings', JSON.stringify(writings));
+        importedWritings = data.writings.length;
+      }
+      
       loadSavedPrompts();
       loadHistory();
       
-      showStatus(`✅ Datos importados: ${importedPrompts} prompts, ${importedHistory} registros de historial`, 'success');
+      showStatus(`✅ Datos importados: ${importedPrompts} prompts, ${importedHistory} historial, ${importedWritings} redacciones`, 'success');
       fileInput.value = '';
       
     } catch (error) {
@@ -896,11 +974,13 @@ function restoreBackup() {
 }
 
 function resetAllData() {
-  if (confirm('⚠️ ¿Restablecer TODOS los datos? Esto borrará prompts e historial. No se puede deshacer.')) {
+  if (confirm('⚠️ ¿Restablecer TODOS los datos? Esto borrará prompts, historial y redacciones. No se puede deshacer.')) {
     localStorage.removeItem('maria_saved_prompts');
     localStorage.removeItem('maria_history');
+    localStorage.removeItem('maria_writings');
     savedPrompts = [];
     history = [];
+    writings = [];
     loadSavedPrompts();
     loadHistory();
     showStatus('✅ Todos los datos han sido restablecidos', 'success');
@@ -925,7 +1005,7 @@ function createStatusElement() {
   return div;
 }
 
-// ========== FUNCIÓN GENERATE MEJORADA ==========
+// ========== FUNCIÓN GENERATE ORIGINAL (RESTAURADA COMPLETA) ==========
 async function generate() {
   const promptText = document.getElementById("prompt").value.trim();
   if (!promptText) {
@@ -1064,7 +1144,7 @@ REGLAS:
         }
       }
       
-      // Procesar la respuesta
+      // Procesar la respuesta (FUNCIÓN ORIGINAL RESTAURADA)
       await processResponse(res, line, resultsDiv, isEmail, isMultipleEmail, destinatarios, asunto);
 
     } catch (error) {
@@ -1083,20 +1163,21 @@ REGLAS:
   showStatus('✅ Comandos procesados correctamente', 'success');
 }
 
-// Función para procesar diferentes tipos de respuestas
+// ========== FUNCIÓN PROCESAR RESPUESTAS ORIGINAL (RESTAURADA) ==========
 async function processResponse(res, originalLine, resultsDiv, isEmail = false, isMultipleEmail = false, destinatarios = [], asunto = '') {
   const action = res.accion || "";
   
-  // 📧 EMAILS (INDIVIDUAL O MÚLTIPLE) - LÓGICA ORIGINAL MEJORADA
-// 👉 ABRIR GMAIL AUTOMÁTICAMENTE
+  // 📧 EMAILS (INDIVIDUAL O MÚLTIPLE) - LÓGICA ORIGINAL COMPLETA
   if (action === "email" || isEmail) {
- if (!isMultipleEmail && res.destinatario && res.contenido) {
-   openEmailInGmail(
-     res.destinatario,
-     res.asunto || asunto || "Sin asunto",
-     res.contenido
-   );
- }
+    // SOLO ABRIR GMAIL PARA EMAILS INDIVIDUALES (como estaba originalmente)
+    if (!isMultipleEmail && res.destinatario && res.contenido) {
+      openEmailInGmail(
+        res.destinatario,
+        res.asunto || asunto || "Sin asunto",
+        res.contenido
+      );
+    }
+    
     const block = document.createElement("div");
     block.className = "result-block email-result";
     
@@ -1138,7 +1219,7 @@ async function processResponse(res, originalLine, resultsDiv, isEmail = false, i
       }
       
       actionsDiv.innerHTML += `
-        <button onclick="copyToClipboard(${JSON.stringify(emailContenido)})" style="background: #FF9800; color: white;">
+        <button onclick="copyToClipboard('${escapeText(emailContenido)}')" style="background: #FF9800; color: white;">
           📋 Copiar contenido
         </button>
       `;
@@ -1168,7 +1249,7 @@ async function processResponse(res, originalLine, resultsDiv, isEmail = false, i
           <button onclick="openEmailInGmail('${destinatario}', ${JSON.stringify(emailAsunto)}, ${JSON.stringify(emailContenido)})" style="background: #4CAF50; color: white;">
             📧 Abrir en Gmail
           </button>
-          <button onclick="copyToClipboard(${JSON.stringify(emailContenido)})" style="background: #2196F3; color: white;">
+          <button onclick="copyToClipboard('${escapeText(emailContenido)}')" style="background: #2196F3; color: white;">
             📋 Copiar contenido
           </button>
         `;
@@ -1179,26 +1260,51 @@ async function processResponse(res, originalLine, resultsDiv, isEmail = false, i
     resultsDiv.appendChild(block);
   }
   
-  // 📝 REDACCIÓN EXTENSA
+  // 📝 REDACCIÓN EXTENSA (MODIFICADA PARA AÑADIR PDF)
   else if (action === "redaccion" || (res.contenido && originalLine.toLowerCase().includes('redacción'))) {
     const block = document.createElement("div");
     block.className = "result-block writing-result";
     
-    const wordCount = res.contenido ? res.contenido.split(/\s+/).length : 0;
+    const content = res.contenido || "";
+    const wordCount = content.split(/\s+/).length;
+    
+    // Guardar la redacción
+    const writingId = Date.now();
+    const writing = {
+      id: writingId,
+      title: originalLine.substring(0, 100),
+      content: content,
+      wordCount: wordCount,
+      timestamp: new Date().toISOString(),
+      source: originalLine
+    };
+    
+    writings.unshift(writing);
+    localStorage.setItem('maria_writings', JSON.stringify(writings));
+    
+    // FUNCIÓN MEJORADA: Limpiar el contenido preservando saltos de línea
+    let cleanContent = cleanTextForDisplay(content);
     
     block.innerHTML = `
       <b>📝 REDACCIÓN EXTENSA (${wordCount} palabras)</b>
-      <textarea rows="15" style="width: 100%; margin-top: 10px; font-size: 14px; line-height: 1.6;">${res.contenido}</textarea>
+      <div class="writing-stats">
+        <span>📊 ${wordCount} palabras</span>
+        <span>📅 ${new Date().toLocaleString()}</span>
+      </div>
+      <textarea rows="15" style="width: 100%; margin-top: 10px; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${cleanContent}</textarea>
     `;
     
     const actionsDiv = document.createElement("div");
-    actionsDiv.className = "email-actions";
+    actionsDiv.className = "pdf-actions";
     actionsDiv.innerHTML = `
-      <button onclick="copyToClipboard(${JSON.stringify(res.contenido)})" style="background: #2196F3; color: white;">
-        📋 Copiar contenido completo
+      <button onclick="copyToClipboard('${escapeText(cleanContent)}')" style="background: #2196F3; color: white;">
+        📋 Copiar contenido
       </button>
-      <button onclick="downloadText(${JSON.stringify(res.contenido)}, 'redaccion')" style="background: #4CAF50; color: white;">
-        💾 Descargar como TXT
+      <button onclick="downloadText('${escapeText(cleanContent)}', 'redaccion')" style="background: #4CAF50; color: white;">
+        💾 Descargar TXT
+      </button>
+      <button onclick="exportWritingToPDF(${JSON.stringify(writing)})" class="pdf-export-btn">
+        📄 Exportar a PDF
       </button>
     `;
     block.appendChild(actionsDiv);
@@ -1325,6 +1431,92 @@ async function processResponse(res, originalLine, resultsDiv, isEmail = false, i
   }
 }
 
+// Función para escapar texto para JavaScript
+function escapeText(text) {
+  return text
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r')
+    .replace(/\t/g, '\\t');
+}
+
+// Función para limpiar texto de HTML preservando saltos de línea
+function cleanTextForDisplay(text) {
+  if (!text) return "";
+  
+  let cleanText = text;
+  
+  // 1. Eliminar etiquetas HTML pero preservar saltos de línea
+  cleanText = cleanText.replace(/<br\s*\/?>/gi, '\n');
+  cleanText = cleanText.replace(/<p\s*.*?>/gi, '\n');
+  cleanText = cleanText.replace(/<\/p>/gi, '\n');
+  cleanText = cleanText.replace(/<h[1-6]\s*.*?>/gi, '\n\n');
+  cleanText = cleanText.replace(/<\/h[1-6]>/gi, '\n\n');
+  cleanText = cleanText.replace(/<[^>]*>/g, ' ');
+  
+  // 2. Eliminar corchetes JSON y Markdown
+  cleanText = cleanText.replace(/\{.*?\}/g, ' ');
+  cleanText = cleanText.replace(/\[.*?\]/g, ' ');
+  cleanText = cleanText.replace(/\*\*.*?\*\*/g, ' ');
+  cleanText = cleanText.replace(/\*.*?\*/g, ' ');
+  cleanText = cleanText.replace(/`.*?`/g, ' ');
+  cleanText = cleanText.replace(/#{1,6}\s?/g, '');
+  
+  // 3. Reemplazar caracteres de escape correctamente
+  cleanText = cleanText.replace(/\\n/g, '\n');
+  cleanText = cleanText.replace(/\\r/g, '\n');
+  cleanText = cleanText.replace(/\\t/g, '    ');
+  
+  // 4. Preservar saltos de línea múltiples para párrafos
+  // Primero normalizamos saltos múltiples
+  cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n');
+  cleanText = cleanText.replace(/\n\s*\n/g, '\n\n');
+  
+  // 5. Eliminar espacios múltiples pero preservar saltos
+  cleanText = cleanText.replace(/[ \t]+/g, ' ');
+  cleanText = cleanText.replace(/[ ]+\n/g, '\n');
+  cleanText = cleanText.replace(/\n[ ]+/g, '\n');
+  
+  // 6. Limpiar espacios al inicio y final
+  cleanText = cleanText.trim();
+  
+  // 7. Asegurar que haya saltos de línea entre párrafos largos
+  // Dividir en oraciones y añadir saltos después de puntos
+  let sentences = cleanText.split('. ');
+  if (sentences.length > 3) {
+    cleanText = sentences.join('.\n\n');
+  }
+  
+  return cleanText;
+}
+
+// Función para limpiar texto para PDF (preservando saltos)
+function cleanTextForPDF(text) {
+  if (!text) return "";
+  
+  let cleanText = text;
+  
+  // Eliminar HTML pero preservar estructura de párrafos
+  cleanText = cleanText.replace(/<br\s*\/?>/gi, '\n');
+  cleanText = cleanText.replace(/<p\s*.*?>/gi, '\n');
+  cleanText = cleanText.replace(/<\/p>/gi, '\n\n');
+  cleanText = cleanText.replace(/<h[1-6]\s*.*?>/gi, '\n\n');
+  cleanText = cleanText.replace(/<\/h[1-6]>/gi, '\n\n');
+  cleanText = cleanText.replace(/<[^>]*>/g, ' ');
+  
+  // Eliminar markdown
+  cleanText = cleanText.replace(/[#*`_~\[\]\(\)\{\}]+/g, ' ');
+  
+  // Normalizar saltos de línea
+  cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n');
+  cleanText = cleanText.replace(/\n\s*\n/g, '\n\n');
+  cleanText = cleanText.replace(/[ \t]+/g, ' ');
+  
+  return cleanText.trim();
+}
+
 // Función para abrir email en Gmail (lógica original)
 function openEmailInGmail(destinatario, asunto, contenido) {
   const gmailUrl =
@@ -1342,19 +1534,36 @@ function openMultipleEmailsSeparately(destinatarios, asunto, contenido) {
   });
 }
 
-
-// Función para copiar al portapapeles
+// Función para copiar al portapapeles (CORREGIDA)
 function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
+  // Decodificar los saltos de línea escapados
+  const decodedText = text
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\t/g, '\t')
+    .replace(/\\'/g, "'")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+  
+  navigator.clipboard.writeText(decodedText).then(() => {
     showStatus('✅ Contenido copiado al portapapeles', 'success');
   }).catch(err => {
     showStatus('❌ Error al copiar: ' + err, 'error');
   });
 }
 
-// Función para descargar texto como archivo
+// Función para descargar texto como archivo (CORREGIDA)
 function downloadText(content, filename = 'redaccion') {
-  const blob = new Blob([content], { type: 'text/plain' });
+  // Decodificar el contenido escapado
+  const decodedContent = content
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\t/g, '\t')
+    .replace(/\\'/g, "'")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+  
+  const blob = new Blob([decodedContent], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1363,7 +1572,109 @@ function downloadText(content, filename = 'redaccion') {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  
   showStatus('✅ Texto descargado como archivo TXT', 'success');
+}
+
+// ========== NUEVAS FUNCIONES PARA EXPORTACIÓN PDF (AÑADIDAS AL FINAL) ==========
+
+// Inicializar jsPDF
+const { jsPDF } = window.jspdf;
+
+// Función para exportar una redacción a PDF (CORREGIDA)
+function exportWritingToPDF(writing) {
+  try {
+    // Crear nuevo documento PDF
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+    
+    // Configurar fuente y tamaño
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    
+    // Título del documento
+    const title = writing.title.length > 50 ? writing.title.substring(0, 50) + '...' : writing.title;
+    
+    // Título principal
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("REDACCIÓN GENERADA POR MARIA", 105, 20, { align: 'center' });
+    
+    // Línea decorativa
+    doc.setDrawColor(66, 133, 244);
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, 190, 25);
+    
+    // Información del documento
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Título: ${title}`, 20, 35);
+    doc.text(`Generado: ${new Date(writing.timestamp).toLocaleString()}`, 20, 42);
+    doc.text(`Palabras: ${writing.wordCount}`, 20, 49);
+    
+    // Línea separadora
+    doc.setDrawColor(200, 200, 200);
+    doc.line(20, 55, 190, 55);
+    
+    // Contenido principal
+    doc.setFontSize(12);
+    
+    // Limpiar el contenido para PDF preservando saltos
+    let cleanContent = cleanTextForPDF(writing.content);
+    
+    // IMPORTANTE: jsPDF necesita el texto con saltos de línea reales
+    // Asegurarnos de que hay saltos de línea entre párrafos
+    cleanContent = cleanContent.replace(/\n\n/g, '\n \n');
+    
+    // Dividir el texto en líneas
+    const lines = doc.splitTextToSize(cleanContent, 170);
+    
+    let y = 65;
+    const pageHeight = doc.internal.pageSize.height;
+    
+    for (let i = 0; i < lines.length; i++) {
+      if (y > pageHeight - 20) {
+        doc.addPage();
+        y = 20;
+        
+        // Añadir encabezado en páginas adicionales
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "italic");
+        doc.text(`Continuación: ${title}`, 20, 15);
+        doc.setDrawColor(200, 200, 200);
+        doc.line(20, 18, 190, 18);
+        
+        y = 25;
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+      }
+      doc.text(lines[i], 20, y);
+      y += 7;
+    }
+    
+    // Pie de página en cada página
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "italic");
+      doc.text(`Página ${i} de ${totalPages} - Generado por MarIA Assistant`, 105, pageHeight - 10, { align: 'center' });
+    }
+    
+    // Guardar el PDF
+    const safeTitle = writing.title.replace(/[^a-z0-9áéíóúüñ]/gi, '_').substring(0, 30).toLowerCase();
+    const filename = `redaccion_${safeTitle}_${Date.now()}.pdf`;
+    doc.save(filename);
+    
+    showStatus(`✅ PDF exportado: ${filename}`, 'success');
+    
+  } catch (error) {
+    console.error('Error exportando PDF:', error);
+    showStatus('❌ Error al exportar PDF: ' + error.message, 'error');
+  }
 }
 
 // Inicializar al cargar la página
@@ -1380,7 +1691,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mensaje inicial de ayuda
   setTimeout(() => {
     if (savedPrompts.length === 0 && history.length === 0) {
-      showStatus('💡 Usa las acciones rápidas para empezar, luego guárdalas para reutilizar.', 'success');
+      showStatus('💡 Usa las acciones rápidas para empezar. ¡Prueba las nuevas funciones de PDF!', 'success');
     }
   }, 1000);
 });
