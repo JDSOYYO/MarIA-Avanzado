@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MarIA – Asistente Inteligente Avanzado</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarIA – Asistente Inteligente Avanzado con Memoria</title>
 <style>
 body {
   font-family: "Segoe UI", Arial, sans-serif;
@@ -11,7 +12,7 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 950px;
+  max-width: 1100px;
   margin: 30px auto;
   background: white;
   border-radius: 12px;
@@ -33,10 +34,21 @@ button {
   border: none;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s;
+}
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 .primary { background: black; color: white; }
 .quick-btn { background: #eee; margin: 4px; }
-.section { margin-top: 20px; }
+.save-btn { background: #4CAF50; color: white; }
+.history-btn { background: #2196F3; color: white; }
+.section { 
+  margin-top: 20px; 
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
 .tutorial {
   background: #f7f7f7;
   border-left: 5px solid black;
@@ -57,14 +69,88 @@ button {
   border-radius: 8px;
   background: #fafafa;
 }
+.history-item {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.history-item:hover {
+  background: #e8f4ff;
+}
+.history-item .timestamp {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+.saved-prompt {
+  background: #e8f5e9;
+  border: 1px solid #4CAF50;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.saved-prompt:hover {
+  background: #c8e6c9;
+}
+.saved-prompt .actions {
+  margin-top: 8px;
+  text-align: right;
+}
+.saved-prompt .actions button {
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.tab-container {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+.tab.active {
+  border-bottom: 3px solid black;
+  font-weight: bold;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.prompt-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>🤖 MarIA Avanzado</h1>
-<p>Asistente inteligente para emails, WhatsApp, Telegram, X, Facebook, LinkedIn, Instagram, búsquedas y textos profesionales</p>
+<h1>🤖 MarIA Avanzado con Memoria</h1>
+<p>Asistente inteligente con historial y prompts guardados</p>
 
 <div class="tutorial">
 <b>Ejemplos de uso:</b>
@@ -73,40 +159,256 @@ button {
   <li>- Escribe WhatsApp a 620158203 indicando ley conmutativa</li>
   <li>- Publica tuit ACADEMICO sobre mi nuevo libro</li>
   <li>- Busca artículos recientes sobre IA en Google</li>
+  <li>1. Instala ollama (llama 3). 2. Terminal Mac: OLLAMA_ORIGINS="*" ollama serve 3. Abre este HTML. 4. Comprueba está corriendo: http://127.0.0.1:11434</li>
 </ul>
 </div>
 
-<div class="section">
-<b>Acciones rápidas:</b><br>
-<button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
-<button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
-<button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
-<button class="quick-btn" onclick="quick('twitter')">🐦 Tuit</button>
-<button class="quick-btn" onclick="quick('facebook')">📘 Facebook</button>
-<button class="quick-btn" onclick="quick('linkedin')">🔗 LinkedIn</button>
-<button class="quick-btn" onclick="quick('instagram')">📸 Instagram</button>
-<button class="quick-btn" onclick="quick('texto')">✍️ Texto</button>
-<button class="quick-btn" onclick="quick('buscar')">🔎 Google</button>
-<button class="quick-btn" onclick="fillTemplate()">📝 Plantilla</button>
+<div class="tab-container">
+  <div class="tab active" onclick="showTab('main')">Principal</div>
+  <div class="tab" onclick="showTab('saved')">Prompts Guardados</div>
+  <div class="tab" onclick="showTab('history')">Historial</div>
 </div>
 
-<div class="section">
-<textarea id="prompt" rows="6" placeholder="Escribe aquí tus tareas, una por línea..."></textarea>
-<br><br>
-<button class="primary" onclick="generate()">Ejecutar</button>
+<div id="tab-main" class="tab-content active">
+  <div class="section">
+    <b>Acciones rápidas:</b><br>
+    <button class="quick-btn" onclick="quick('email')">📧 Email editorial</button>
+    <button class="quick-btn" onclick="quick('whatsapp')">💬 WhatsApp</button>
+    <button class="quick-btn" onclick="quick('telegram')">📱 Telegram</button>
+    <button class="quick-btn" onclick="quick('twitter')">🐦 Tuit</button>
+    <button class="quick-btn" onclick="quick('facebook')">📘 Facebook</button>
+    <button class="quick-btn" onclick="quick('linkedin')">🔗 LinkedIn</button>
+    <button class="quick-btn" onclick="quick('instagram')">📸 Instagram</button>
+    <button class="quick-btn" onclick="quick('texto')">✍️ Texto</button>
+    <button class="quick-btn" onclick="quick('buscar')">🔎 Google</button>
+    <button class="quick-btn" onclick="fillTemplate()">📝 Plantilla</button>
+  </div>
+
+  <div class="section">
+    <textarea id="prompt" rows="6" placeholder="Escribe aquí tus tareas, una por línea..."></textarea>
+    <div class="prompt-actions">
+      <button class="primary" onclick="generate()">Ejecutar</button>
+      <button class="save-btn" onclick="saveCurrentPrompt()">💾 Guardar Prompt</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Resultados</h3>
+    <div id="results"></div>
+  </div>
+
+  <div class="section">
+    <h3>Contactos recientes</h3>
+    <div id="contacts"></div>
+  </div>
 </div>
 
-<div class="section">
-<h3>Resultados</h3>
-<div id="results"></div>
+<div id="tab-saved" class="tab-content">
+  <div class="section">
+    <h3>Prompts Guardados</h3>
+    <p>Haz clic en cualquier prompt para cargarlo en el área principal.</p>
+    <div id="saved-prompts"></div>
+    <button onclick="clearSavedPrompts()" style="background: #f44336; color: white;">🗑️ Borrar todos los prompts</button>
+  </div>
 </div>
 
-<div class="section">
-<h3>Contactos recientes</h3>
-<div id="contacts"></div>
+<div id="tab-history" class="tab-content">
+  <div class="section">
+    <h3>Historial de Ejecuciones</h3>
+    <p>Últimas consultas realizadas. Haz clic para reutilizar.</p>
+    <div id="history-list"></div>
+    <button onclick="clearHistory()" style="background: #f44336; color: white;">🗑️ Borrar historial</button>
+  </div>
+</div>
+
 </div>
 
 <script>
+// Variables globales para manejar memoria
+let savedPrompts = JSON.parse(localStorage.getItem('maria_saved_prompts') || '[]');
+let history = JSON.parse(localStorage.getItem('maria_history') || '[]');
+
+// Mostrar pestaña activa
+function showTab(tabName) {
+  // Ocultar todas las pestañas
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  // Mostrar pestaña seleccionada
+  document.getElementById('tab-' + tabName).classList.add('active');
+  document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+  
+  // Cargar datos de la pestaña si es necesario
+  if (tabName === 'saved') {
+    loadSavedPrompts();
+  } else if (tabName === 'history') {
+    loadHistory();
+  }
+}
+
+// Cargar prompts guardados
+function loadSavedPrompts() {
+  const container = document.getElementById('saved-prompts');
+  if (!container) return;
+  
+  if (savedPrompts.length === 0) {
+    container.innerHTML = '<p>No tienes prompts guardados aún.</p>';
+    return;
+  }
+  
+  container.innerHTML = savedPrompts.map((prompt, index) => `
+    <div class="saved-prompt">
+      <div class="timestamp">Guardado: ${new Date(prompt.timestamp).toLocaleString()}</div>
+      <div onclick="loadPrompt(${index})">${prompt.text}</div>
+      <div class="actions">
+        <button onclick="usePrompt(${index})" style="background: #2196F3; color: white;">Usar</button>
+        <button onclick="deletePrompt(${index})" style="background: #f44336; color: white;">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Cargar historial
+function loadHistory() {
+  const container = document.getElementById('history-list');
+  if (!container) return;
+  
+  if (history.length === 0) {
+    container.innerHTML = '<p>No hay historial aún.</p>';
+    return;
+  }
+  
+  container.innerHTML = history.map((item, index) => `
+    <div class="history-item">
+      <div class="timestamp">${new Date(item.timestamp).toLocaleString()} - ${item.action}</div>
+      <div onclick="loadHistoryPrompt(${index})">${item.prompt}</div>
+    </div>
+  `).join('');
+}
+
+// Guardar prompt actual
+function saveCurrentPrompt() {
+  const promptText = document.getElementById("prompt").value.trim();
+  
+  if (!promptText) {
+    alert('Por favor, escribe un prompt primero');
+    return;
+  }
+  
+  // Verificar si ya existe
+  const exists = savedPrompts.some(p => p.text === promptText);
+  if (exists) {
+    if (!confirm('Este prompt ya está guardado. ¿Deseas guardarlo de nuevo?')) {
+      return;
+    }
+  }
+  
+  // Guardar prompt
+  savedPrompts.unshift({
+    text: promptText,
+    timestamp: new Date().toISOString()
+  });
+  
+  // Mantener solo los últimos 50 prompts
+  if (savedPrompts.length > 50) {
+    savedPrompts = savedPrompts.slice(0, 50);
+  }
+  
+  // Guardar en localStorage
+  localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
+  
+  // Mostrar mensaje de éxito
+  alert('Prompt guardado correctamente');
+  
+  // Recargar lista si estamos en la pestaña de guardados
+  if (document.getElementById('tab-saved').classList.contains('active')) {
+    loadSavedPrompts();
+  }
+}
+
+// Cargar prompt para ver
+function loadPrompt(index) {
+  if (savedPrompts[index]) {
+    document.getElementById("prompt").value = savedPrompts[index].text;
+    showTab('main');
+  }
+}
+
+// Usar prompt directamente
+function usePrompt(index) {
+  if (savedPrompts[index]) {
+    document.getElementById("prompt").value = savedPrompts[index].text;
+    showTab('main');
+    generate(); // Ejecutar automáticamente
+  }
+}
+
+// Eliminar prompt guardado
+function deletePrompt(index) {
+  if (confirm('¿Eliminar este prompt guardado?')) {
+    savedPrompts.splice(index, 1);
+    localStorage.setItem('maria_saved_prompts', JSON.stringify(savedPrompts));
+    loadSavedPrompts();
+  }
+}
+
+// Cargar prompt del historial
+function loadHistoryPrompt(index) {
+  if (history[index]) {
+    document.getElementById("prompt").value = history[index].prompt;
+    showTab('main');
+  }
+}
+
+// Borrar todos los prompts guardados
+function clearSavedPrompts() {
+  if (savedPrompts.length === 0) {
+    alert('No hay prompts guardados para borrar');
+    return;
+  }
+  
+  if (confirm('¿Borrar todos los prompts guardados? Esta acción no se puede deshacer.')) {
+    savedPrompts = [];
+    localStorage.removeItem('maria_saved_prompts');
+    loadSavedPrompts();
+  }
+}
+
+// Borrar historial
+function clearHistory() {
+  if (history.length === 0) {
+    alert('No hay historial para borrar');
+    return;
+  }
+  
+  if (confirm('¿Borrar todo el historial? Esta acción no se puede deshacer.')) {
+    history = [];
+    localStorage.removeItem('maria_history');
+    loadHistory();
+  }
+}
+
+// Añadir al historial
+function addToHistory(promptText, action) {
+  history.unshift({
+    prompt: promptText,
+    action: action || 'Ejecución',
+    timestamp: new Date().toISOString()
+  });
+  
+  // Mantener solo los últimos 100 registros
+  if (history.length > 100) {
+    history = history.slice(0, 100);
+  }
+  
+  localStorage.setItem('maria_history', JSON.stringify(history));
+}
+
+// Funciones originales (modificadas para incluir historial)
 function quick(type){
   const presets = {
     email: "Manda email a @gmail.com con asunto IMPORTANTE solicitando -",
@@ -119,22 +421,33 @@ function quick(type){
     texto: "Explícame un concepto de forma sencilla",
     buscar: "Busca en Google artículos sobre inteligencia artificial"
   };
-  document.getElementById("prompt").value = presets[type];
+  const promptText = presets[type];
+  document.getElementById("prompt").value = promptText;
+  addToHistory(promptText, `Acción rápida: ${type}`);
 }
 
 function fillTemplate(){
-  document.getElementById("prompt").value =
-`- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial
+  const template = `- Manda email a @gmail.com con asunto IMPORTANTE solicitando trato editorial
 - Escribe WhatsApp a 620158203 indicando puntos clave
 - Envía mensaje a Telegram a 34620158203
 - Publica en LinkedIn sobre mi perfil
 - Busca en Google artículos recientes sobre IA`;
+  
+  document.getElementById("prompt").value = template;
+  addToHistory(template, 'Plantilla cargada');
 }
 
 async function generate(){
-  const lines = document.getElementById("prompt").value
-    .split("\n").filter(l => l.trim() !== "");
-
+  const promptText = document.getElementById("prompt").value.trim();
+  if (!promptText) {
+    alert('Por favor, escribe un prompt primero');
+    return;
+  }
+  
+  // Añadir al historial
+  addToHistory(promptText, 'Ejecución completa');
+  
+  const lines = promptText.split("\n").filter(l => l.trim() !== "");
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
@@ -201,14 +514,12 @@ REGLAS:
         window.open(`https://wa.me/${res.destinatario}?text=${encodeURIComponent(res.contenido)}`);
       }
       if(res.accion === "telegram"){
-      const phone = res.destinatario.replace(/\s+/g, "");
-      window.open(
-     `https://t.me/+${phone}?text=${encodeURIComponent(res.contenido)}`,
-     "_blank"
-       );
-     }
-
-
+        const phone = res.destinatario.replace(/\s+/g, "");
+        window.open(
+          `https://t.me/+${phone}?text=${encodeURIComponent(res.contenido)}`,
+          "_blank"
+        );
+      }
 
       if(res.accion === "twitter"){
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(res.contenido)}`);
@@ -229,9 +540,20 @@ REGLAS:
 
     } catch(e){
       console.error(e);
+      const errorBlock = document.createElement("div");
+      errorBlock.className = "result-block";
+      errorBlock.innerHTML = `<b>Error:</b> ${e.message}`;
+      resultsDiv.appendChild(errorBlock);
     }
   }
 }
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+  // Cargar datos iniciales
+  loadSavedPrompts();
+  loadHistory();
+});
 </script>
 
 </body>
