@@ -4,8 +4,9 @@
 Comprueba está corriendo: http://127.0.0.1:11434
 ---
 En Windows:
-Abrir Powershell y poner comando:
+Abrir Powershell y poner comandos:
 $env:OLLAMA_ORIGINS="*"
+
 ollama serve
 
 ---
