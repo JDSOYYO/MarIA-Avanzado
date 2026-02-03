@@ -3,6 +3,12 @@
 2. Abre el HTML.
 Comprueba está corriendo: http://127.0.0.1:11434
 ---
+En Windows:
+Abrir Powershell y poner comando:
+$env:OLLAMA_ORIGINS="*"
+ollama serve
+
+---
 Una vez abierto puedes dar comandos de este tipo y hará todo en orden:
 - Manda email a alguien@gmail.com con asunto IMPORTANTE solicitando trato editorial
 - Escribe WhatsApp a 620111111 indicando puntos clave
